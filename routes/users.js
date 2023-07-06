@@ -6,7 +6,7 @@ users.get('/users/me', getUserInfo);
 
 users.patch('/users/me', celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(1).max(30),
+    name: Joi.string().min(2).max(30),
   }),
 }), editUser);
 
