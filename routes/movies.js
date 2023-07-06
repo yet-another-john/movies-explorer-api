@@ -16,12 +16,13 @@ movies.post('/movies', celebrate({
     thumbnail: Joi.string().required().uri().pattern(/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/),
     nameRU: Joi.string().max(30).required(),
     nameEN: Joi.string().max(30).required(),
+    movieId: Joi.number().required(),
   }),
 }), createMovie);
 
-movies.delete('/movies/:movieId', celebrate({
+movies.delete('/movies/:id', celebrate({
   params: Joi.object().keys({
-    movieId: Joi.string().length(24).hex().required(),
+    id: Joi.string().length(24).hex().required(),
   }),
 }), deleteMovie);
 

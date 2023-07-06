@@ -24,6 +24,7 @@ const createMovie = (req, res, next) => {
     owner: req.user._id,
     nameRU: req.body.nameRU,
     nameEN: req.body.nameEN,
+    movieId: req.body.movieId,
   })
     .then((movie) => res.send(movie))
     .catch((err) => {
@@ -36,7 +37,7 @@ const createMovie = (req, res, next) => {
 };
 
 const deleteMovie = (req, res, next) => {
-  Movie.findById(req.params.movieId)
+  Movie.findById(req.params.id)
     .orFail(() => {
       throw new NotFoundError('Not found');
     })
@@ -44,7 +45,7 @@ const deleteMovie = (req, res, next) => {
       if (req.user._id !== movie.owner.toString()) {
         throw new Forbidden('Forbidden');
       }
-      Movie.findByIdAndRemove(req.params.movieId)
+      Movie.findByIdAndRemove(req.params.id)
         .orFail(() => {
           throw new NotFoundError('Not found');
         })
