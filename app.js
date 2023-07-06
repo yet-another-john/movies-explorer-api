@@ -6,7 +6,7 @@ const { celebrate, Joi } = require('celebrate');
 const { errors } = require('celebrate');
 const cors = require('cors');
 const users = require('./routes/users');
-const cards = require('./routes/cards');
+const movies = require('./routes/movies');
 const { createUser, login } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const NotFoundError = require('./errors/not-found-error');
@@ -18,7 +18,7 @@ const app = express();
 
 app.use(cors());
 
-mongoose.connect('mongodb://127.0.0.1:27017/mestodb')
+mongoose.connect('mongodb://127.0.0.1:27017/bitfilmsdb')
   .then(() => {
     console.log('MongoDB - Ok');
   })
@@ -41,9 +41,7 @@ app.post('/signup', celebrate({
   body: Joi.object().keys({
     email: Joi.string().required().email(),
     password: Joi.string().required(),
-    name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: Joi.string().uri().pattern(/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/),
+    name: Joi.string().min(1).max(30),
   }),
 }), createUser);
 
@@ -57,7 +55,7 @@ app.post('/signin', celebrate({
 app.use(auth);
 
 app.use(users);
-app.use(cards);
+app.use(movies);
 
 app.use((req, res, next) => {
   next(new NotFoundError('Page not found'));
