@@ -3,27 +3,22 @@ const mongoose = require('mongoose');
 const movieSchema = new mongoose.Schema({
   country: {
     type: String,
-    maxlength: 30,
     required: true,
   },
   director: {
     type: String,
-    maxlength: 30,
     required: true,
   },
   duration: {
     type: Number,
-    maxlength: 30,
     required: true,
   },
   year: {
     type: String,
-    maxlength: 30,
     required: true,
   },
   description: {
     type: String,
-    maxlength: 30,
     required: true,
   },
   image: {
@@ -42,22 +37,20 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   owner: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
     required: true,
   },
   movieId: {
     type: Number,
-    maxlength: 30,
     required: true,
   },
   nameRU: {
     type: String,
-    maxlength: 30,
     required: true,
   },
   nameEN: {
     type: String,
-    maxlength: 30,
     required: true,
   },
 });
