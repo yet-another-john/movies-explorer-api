@@ -69,7 +69,7 @@ const editUser = (req, res, next) => {
   User.findOne({ email })
     .then((userData) => {
       if (userData) {
-        throw new BadRequest('Email already in use');
+        throw new Conflict('Email already registered');
       }
       User.findByIdAndUpdate(
         req.user._id,
