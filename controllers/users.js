@@ -65,17 +65,23 @@ const getUserInfo = (req, res, next) => {
 };
 
 const editUser = (req, res, next) => {
-  const { name } = req.body;
-  User.findByIdAndUpdate(
-    req.user._id,
-    { name },
-    { new: true, runValidators: true, upsert: false },
-  )
-    .orFail(() => {
-      throw new NotFoundError('Not found');
-    })
-    .then((user) => {
-      res.send(user);
+  const { email, name } = req.body;
+  User.findOne({ email })
+    .then((userData) => {
+      if (userData) {
+        throw new Conflict('Email already registered');
+      }
+      User.findByIdAndUpdate(
+        req.user._id,
+        { email, name },
+        { new: true, runValidators: true, upsert: false },
+      )
+        .orFail(() => {
+          throw new NotFoundError('Not found');
+        })
+        .then((user) => {
+          res.send(user);
+        });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
