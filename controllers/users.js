@@ -66,11 +66,11 @@ const getUserInfo = (req, res, next) => {
 
 const editUser = (req, res, next) => {
   const { email, name } = req.body;
-  User.findOne({ email })
-    .then((userData) => {
-      if (userData) {
-        throw new Conflict('Email already registered');
-      }
+//  User.findOne({ email })
+//    .then((userData) => {
+//      if (userData) {
+//        throw new Conflict('Email already registered');
+//      }
       User.findByIdAndUpdate(
         req.user._id,
         { email, name },
@@ -81,7 +81,7 @@ const editUser = (req, res, next) => {
         })
         .then((user) => {
           res.send(user);
-        });
+  //      });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
