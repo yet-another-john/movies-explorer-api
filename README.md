@@ -1,1 +1,1 @@
-# Проект Movies Explorer
+# Movies Explorer
